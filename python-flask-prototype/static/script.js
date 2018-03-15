@@ -102,6 +102,8 @@ $('#save-note-btn').on('click', function(e) {
       contentType: 'application/json; charset=utf-8',
       data: JSON.stringify(sendInfo),
       success: function (result) {
+          imageSection = document.getElementById('imageSection')
+          imageSection.innerHTML = '<img src="' + result.url + '">'
           console.log(result);
           // showJson(result)
           // $("#predictions").show()
