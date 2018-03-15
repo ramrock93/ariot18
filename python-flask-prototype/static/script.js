@@ -103,8 +103,13 @@ $('#save-note-btn').on('click', function(e) {
       data: JSON.stringify(sendInfo),
       success: function (result) {
           imageSection = document.getElementById('imageSection')
-          imageSection.innerHTML = '<img src="' + result.url + '">'
+          imageSection.innerHTML = ""
           console.log(result);
+          for (var i in result.urls)
+          {
+            imageSection.innerHTML = imageSection.innerHTML + '<img src="' + result.urls[i] + '">'
+            imageSection.innerHTML = imageSection.innerHTML + result.texts[i]
+          }
           // showJson(result)
           // $("#predictions").show()
       },
