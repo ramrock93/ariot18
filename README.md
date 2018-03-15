@@ -1,38 +1,27 @@
-# ARIoT18 / team:placeholder
+# Ariot18Placeholder
 
-This project aims to create a dynamic presentation on the fly based on the presenter's speech
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
 
-## Getting Started
+## Development server
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-### Prerequisites
+## Code scaffolding
 
-```
-Python
-.NET
-Web Speech (JS)
-```
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-### Installing
+## Build
 
-Todo
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
-## Running the tests
+## Running unit tests
 
-Todo
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
+## Running end-to-end tests
 
-## Deployment
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-Todo
+## Further help
 
-## Built With
-
-* [MSBUILD](https://en.wikipedia.org/wiki/MSBuild) - Used for .NET backend
-
-
-## Acknowledgments
-
-* [ARIoT 2018](https://ariot.no) - The Hackathon that made this possible!
-* [Inmeta](https://inmeta.no) - Hardware
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
