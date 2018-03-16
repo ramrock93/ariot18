@@ -1,8 +1,14 @@
-<button (click)="start()">
-  Start
+<button (click)="getSlideData()">
+  GetSlideData
 </button>
 
 
 <p>
   Text: {{speechData}}
+</p>
+<p>
+  {{sessionId}}
+</p>
+<p>
+  {{slideData | json}}
 </p>
