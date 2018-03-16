@@ -1,6 +1,7 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from "@angular/platform-browser";
+import {NgModule} from "@angular/core";
 
+import {AngularFontAwesomeModule} from "angular-font-awesome";
 
 import { AppComponent } from './app.component';
 import { PresenterComponent } from './presenter/presenter.component';
@@ -13,11 +14,10 @@ const appRoutes: Routes = [
   { path: 'presenter', component: PresenterComponent },
   { path: 'show/:id',      component: ShowComponent },
   { path: 'test',      component: TestSpeechToTextComponent },
-
-
-  { path: '',
-    redirectTo: '/presenter',
-    pathMatch: 'full'
+  {
+    path: "",
+    redirectTo: "/presenter",
+    pathMatch: "full"
   }
 ];
 
@@ -30,12 +30,14 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    AngularFontAwesomeModule,
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true }
-      )
+      {enableTracing: true}
+    )
   ],
   providers: [SpeechRecognitionService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

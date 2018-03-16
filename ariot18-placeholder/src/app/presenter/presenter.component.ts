@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 
 @Component({
-  selector: 'app-presenter',
-  templateUrl: './presenter.component.html',
-  styleUrls: ['./presenter.component.css']
+  selector: "app-presenter",
+  templateUrl: "./presenter.component.html",
+  styleUrls: ["./presenter.component.css"]
 })
 export class PresenterComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+  }
+
+  play(event) {
+    console.log(event);
   }
 
 }
