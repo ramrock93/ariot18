@@ -108,7 +108,7 @@ $('#save-note-btn').on('click', function(e) {
           for (var i in result.slides)
           {
             imageSection.innerHTML = imageSection.innerHTML + '<img src="' + result.slides[i].url + '">'
-            imageSection.innerHTML = imageSection.innerHTML + result.slides[i].title
+            imageSection.innerHTML = imageSection.innerHTML + result.slides[i].title + "<br>"
           }
           // showJson(result)
           // $("#predictions").show()
