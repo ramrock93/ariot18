@@ -1,8 +1,15 @@
 <div class="container" style="display: flex; justify-content: center; align-items: center;">
   <div class="row">
     <div class="col-md-12">
-      <div class="text-center" style="font-size:3em; color:#277eff;">
-        <i (click)="play($event)" class="fa fa-play-circle fa-align-center"></i>
+      <div class="text-center" style="margin-top: 20em">
+        <button (click)="play($event)" type="submit" style="width: 150px; height: 100px;" class="btn btn-primary">
+          Play
+        </button>
+        <br>
+        <div class="col-form-label-lg">
+          <label for="session-id"><strong>Session-ID:</strong> #{{sessionId}}</label>
+          <label id="session-id"></label>
+        </div>
       </div>
     </div>
   </div>

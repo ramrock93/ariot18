@@ -6,6 +6,7 @@ import {Component, OnInit} from "@angular/core";
   styleUrls: ["./presenter.component.css"]
 })
 export class PresenterComponent implements OnInit {
+  private _sessionId = 123;
 
   constructor() {
   }
@@ -14,7 +15,15 @@ export class PresenterComponent implements OnInit {
   }
 
   play(event) {
-    console.log(event);
+    console.log("Play button clicked");
   }
 
+
+  get sessionId() {
+    return this._sessionId;
+  }
+
+  set sessionId(value) {
+    this._sessionId = value;
+  }
 }
