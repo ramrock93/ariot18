@@ -1,5 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SpeechRecognitionService} from '../speech-recognition.service';
+import {PresenterService} from "../presenter.service";
+import {SlideData} from "../SlideData";
 
 @Component({
   selector: 'app-test-speech-to-text',
@@ -8,14 +10,19 @@ import {SpeechRecognitionService} from '../speech-recognition.service';
 })
 export class TestSpeechToTextComponent implements OnInit, OnDestroy {
 
+  slideData: SlideData;
   speechData: string;
+  sessionId: number;
 
-  constructor( private speechRecognitionService: SpeechRecognitionService) {
+  constructor( private speechRecognitionService: SpeechRecognitionService,
+  private presenterService: PresenterService) {
     this.speechData = '';
+    this.slideData = new SlideData();
   }
 
   ngOnInit() {
     this.start();
+    this.startSession();
     /*
     setInterval(() => {
       this.stop();
@@ -27,7 +34,7 @@ export class TestSpeechToTextComponent implements OnInit, OnDestroy {
     this.speechRecognitionService.DestroySpeechObject();
   }
 
-  stop() {
+  stop(): void {
     this.speechRecognitionService.stopRecording();
   }
 
@@ -53,6 +60,16 @@ export class TestSpeechToTextComponent implements OnInit, OnDestroy {
           console.log('--complete--');
           this.start();
         });
+  }
+  startSession(): void {
+    this.presenterService.getId().then(
+      (data) => {
+        this.sessionId = data;
+    });
+  }
+  getSlideData(): void {
+    const data = this.presenterService.getSlideData(this.sessionId)
+      .then((slidedata) => this.slideData = slidedata);
   }
 
 }
