@@ -19,7 +19,7 @@ export class PresenterComponent implements OnInit {
 
   play(event) {
     console.log("Play button clicked");
-    this.router.navigateByUrl("/show/"+this.sessionId);
+    this.router.navigateByUrl('/recording/' + this.sessionId);
 
   }
 

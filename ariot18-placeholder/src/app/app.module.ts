@@ -12,13 +12,14 @@ import { TestSpeechToTextComponent } from './test-speech-to-text/test-speech-to-
 import {PresenterService} from './presenter.service';
 import {HttpClientModule} from '@angular/common/http';
 import { ThankyouComponent } from './thankyou/thankyou.component';
-import { TimerPageComponent } from './timer-page/timer-page.component';
+import { RecordingComponent } from './recording/recording.component';
 
 const appRoutes: Routes = [
   { path: 'presenter', component: PresenterComponent },
   { path: 'show/:id',      component: ShowComponent },
   { path: 'test',      component: TestSpeechToTextComponent },
   { path: 'thankyou',      component: ThankyouComponent },
+  { path: 'recording/:id',      component: RecordingComponent },
   {
     path: "",
     redirectTo: "/presenter",
@@ -33,7 +34,7 @@ const appRoutes: Routes = [
     ShowComponent,
     TestSpeechToTextComponent,
     ThankyouComponent,
-    TimerPageComponent
+    RecordingComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +45,10 @@ const appRoutes: Routes = [
       {enableTracing: true}
     )
   ],
-  providers: [SpeechRecognitionService, PresenterService],
+  providers: [
+    SpeechRecognitionService,
+    PresenterService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
