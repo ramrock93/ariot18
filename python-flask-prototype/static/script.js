@@ -93,7 +93,7 @@ noteTextarea.on('input', function() {
 $('#save-note-btn').on('click', function(e) {
   recognition.stop();
   var sendInfo = {
-                   "message": noteContent
+                   "text": noteContent
                  };
   $.ajax({
       url: "http://localhost:5000/text2slides", // url where to submit the request
