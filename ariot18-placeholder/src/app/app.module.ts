@@ -9,6 +9,8 @@ import {RouterModule, Routes} from '@angular/router';
 import { ShowComponent } from './show/show.component';
 import {SpeechRecognitionService} from './speech-recognition.service';
 import { TestSpeechToTextComponent } from './test-speech-to-text/test-speech-to-text.component';
+import {PresenterService} from './presenter.service';
+import {HttpClientModule} from '@angular/common/http';
 
 const appRoutes: Routes = [
   { path: 'presenter', component: PresenterComponent },
@@ -31,12 +33,13 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     AngularFontAwesomeModule,
+    HttpClientModule,
     RouterModule.forRoot(
       appRoutes,
       {enableTracing: true}
     )
   ],
-  providers: [SpeechRecognitionService],
+  providers: [SpeechRecognitionService, PresenterService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
