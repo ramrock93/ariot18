@@ -26,11 +26,14 @@ export class PresenterService {
   getSlideData (id: number): Promise<SlideData> {
     return this.http.get(this.getSlideDataUrl + '/' + id)
       .toPromise()
-      .then((response: Response) =>  this.parseToSlideData((<any>response).Data))
+      .then((response: Response) =>  {console.log(response); this.parseToSlideData((<any>response).Data)})
       .catch(this.handleError);
   }
 
   parseToSlideData(data: any): SlideData {
+    if (data === undefined) {
+      return new SlideData();
+    }
     const sd = new SlideData();
     sd.id = data.Id;
     sd.images = [];
@@ -43,6 +46,10 @@ export class PresenterService {
     return sd;
   }
   parseToImageModel(data: any): ImageModel{
+    if (data === undefined) {
+      return undefined;
+    }
+
     const im = new ImageModel();
     im.id = data.Id;
     im.text = data.Text;

@@ -11,11 +11,13 @@ import {SpeechRecognitionService} from './speech-recognition.service';
 import { TestSpeechToTextComponent } from './test-speech-to-text/test-speech-to-text.component';
 import {PresenterService} from './presenter.service';
 import {HttpClientModule} from '@angular/common/http';
+import { ThankyouComponent } from './thankyou/thankyou.component';
 
 const appRoutes: Routes = [
   { path: 'presenter', component: PresenterComponent },
   { path: 'show/:id',      component: ShowComponent },
   { path: 'test',      component: TestSpeechToTextComponent },
+  { path: 'thankyou',      component: ThankyouComponent },
   {
     path: "",
     redirectTo: "/presenter",
@@ -28,7 +30,8 @@ const appRoutes: Routes = [
     AppComponent,
     PresenterComponent,
     ShowComponent,
-    TestSpeechToTextComponent
+    TestSpeechToTextComponent,
+    ThankyouComponent
   ],
   imports: [
     BrowserModule,
