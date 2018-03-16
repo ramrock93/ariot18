@@ -1,4 +1,5 @@
 import {Component, OnInit} from "@angular/core";
+import {PresenterService} from "../presenter.service";
 
 @Component({
   selector: "app-presenter",
@@ -8,10 +9,11 @@ import {Component, OnInit} from "@angular/core";
 export class PresenterComponent implements OnInit {
   private _sessionId = 123;
 
-  constructor() {
+  constructor(private presenterService: PresenterService) {
   }
 
   ngOnInit() {
+    this.presenterService.getId().then(res => this. _sessionId = res.valueOf());
   }
 
   play(event) {
