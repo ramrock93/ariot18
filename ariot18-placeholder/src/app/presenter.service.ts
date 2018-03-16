@@ -26,7 +26,7 @@ export class PresenterService {
   getSlideData (id: number): Promise<SlideData> {
     return this.http.get(this.getSlideDataUrl + '/' + id)
       .toPromise()
-      .then((response: Response) =>  this.parseToSlideData(response.Data))
+      .then((response: Response) =>  this.parseToSlideData((<any>response).Data))
       .catch(this.handleError);
   }
 
