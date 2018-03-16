@@ -1,7 +1,9 @@
 """
 Routes and views for the flask application.
 """
+from rake_nltk import Rake
 from flask import make_response, Flask, jsonify, render_template, request
+from gensim.summarization.summarizer import summarize
 import requests
 import nltk
 from nltk import word_tokenize
@@ -12,23 +14,29 @@ flask_app = Flask(__name__)
 @flask_app.route('/text2slides', methods=['POST'])
 def predict():
     try:
-        print(request.json)
-        text = word_tokenize(request.json['text'])
+        r = Rake()
+        r.extract_keywords_from_text(request.json['text'])
+
+        keywords = r.get_ranked_phrases()[0:3]
+
+        print("Keywords:", keywords)
+
+        search_words = " ".join(keywords)
+        search_words = word_tokenize(search_words)
+
         if 'excludedText' in request.json.keys():
             excluded_text = word_tokenize(request.json['excludedText'])
-            text = [word for word in text if word not in excluded_text]
+            search_words = [word for word in search_words if word not in excluded_text]
         if 'staticText' in request.json.keys():
             static_text = word_tokenize(request.json['staticText'])
-            text = text + static_text
+            search_words = search_words + static_text
 
-        tagged = nltk.pos_tag(text)
-        # print(tagged)
-        preferred_pos = ['NN', 'NNP', 'NNS', 'JJ']
-        search_words = " ".join([e[0] for e in tagged if e[1] in preferred_pos])
-        print(search_words)
+        print("Filtered keywords", search_words)
+        search_words = " ".join(search_words)
+
 
         payload = {
-                    "key": "AIzaSyC6HQu8GA-fndW8Bl_MaUXmQwrXam3V9HM",
+                    "key": "AIzaSyDNPK7YppoMYsXB4EnTE4ruvhKUatslly4",
                     "cx": "13710860529765588748:mpunbp22wgo",
                     "q": search_words
                     }
@@ -46,6 +54,24 @@ def predict():
 
         return jsonify({"inputMessage": request.json['text'],
                         "slides": slide_items,
+                        "searchTerm": search_words,
+                        "status": "success"}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+
+@flask_app.route('/summary', methods=['POST'])
+def summary_of_text():
+    try:
+        text = request.json['text']
+        word_count = 10
+        summary = summarize(text, word_count=word_count)
+        while len(summary) == 0:
+            summary = summarize(text, word_count=word_count)
+            word_count += 10
+            if word_count > 400:
+                return jsonify({'error': 'text could not be summarized (too short?)'}), 400
+        return jsonify({"summary": summary,
                         "status": "success"}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 400
@@ -56,4 +82,4 @@ def index():
     return render_template("index.html")
 
 
-flask_app.run("0.0.0.0", port=80)
+flask_app.run("0.0.0.0", port=80, threaded=True)
