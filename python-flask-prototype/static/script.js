@@ -96,7 +96,7 @@ $('#save-note-btn').on('click', function(e) {
                    "message": noteContent
                  };
   $.ajax({
-      url: "http://localhost:5000/predict", // url where to submit the request
+      url: "http://localhost:5000/text2slides", // url where to submit the request
       type: "POST", // type of action POST || GET
       dataType: 'json', // data type
       contentType: 'application/json; charset=utf-8',
@@ -105,10 +105,10 @@ $('#save-note-btn').on('click', function(e) {
           imageSection = document.getElementById('imageSection')
           imageSection.innerHTML = ""
           console.log(result);
-          for (var i in result.urls)
+          for (var i in result.slides)
           {
-            imageSection.innerHTML = imageSection.innerHTML + '<img src="' + result.urls[i] + '">'
-            imageSection.innerHTML = imageSection.innerHTML + result.texts[i]
+            imageSection.innerHTML = imageSection.innerHTML + '<img src="' + result.slides[i].url + '">'
+            imageSection.innerHTML = imageSection.innerHTML + result.slides[i].title
           }
           // showJson(result)
           // $("#predictions").show()
