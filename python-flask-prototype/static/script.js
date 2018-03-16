@@ -96,7 +96,7 @@ $('#save-note-btn').on('click', function(e) {
                    "text": noteContent
                  };
   $.ajax({
-      url: "http://text2slides.westeurope.cloudapp.azure.com//text2slides", // url where to submit the request
+      url: "http://text2slides.westeurope.cloudapp.azure.com/text2slides", // url where to submit the request
       type: "POST", // type of action POST || GET
       dataType: 'json', // data type
       contentType: 'application/json; charset=utf-8',
