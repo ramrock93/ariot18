@@ -12,6 +12,7 @@ import { TestSpeechToTextComponent } from './test-speech-to-text/test-speech-to-
 import {PresenterService} from './presenter.service';
 import {HttpClientModule} from '@angular/common/http';
 import { ThankyouComponent } from './thankyou/thankyou.component';
+import { TimerPageComponent } from './timer-page/timer-page.component';
 
 const appRoutes: Routes = [
   { path: 'presenter', component: PresenterComponent },
@@ -31,7 +32,8 @@ const appRoutes: Routes = [
     PresenterComponent,
     ShowComponent,
     TestSpeechToTextComponent,
-    ThankyouComponent
+    ThankyouComponent,
+    TimerPageComponent
   ],
   imports: [
     BrowserModule,

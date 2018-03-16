@@ -1,5 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {PresenterService} from "../presenter.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: "app-presenter",
@@ -9,7 +10,7 @@ import {PresenterService} from "../presenter.service";
 export class PresenterComponent implements OnInit {
   private _sessionId = 123;
 
-  constructor(private presenterService: PresenterService) {
+  constructor(private presenterService: PresenterService, private router: Router) {
   }
 
   ngOnInit() {
@@ -18,6 +19,8 @@ export class PresenterComponent implements OnInit {
 
   play(event) {
     console.log("Play button clicked");
+    this.router.navigateByUrl("/show/"+this.sessionId);
+
   }
 
 
