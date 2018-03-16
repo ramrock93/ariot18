@@ -18,12 +18,13 @@ export class ShowComponent implements OnInit {
   ]
   imgSrcUrl: string;
   cnt = 0;
-  secondsPerSlide = 5;
+  secondsPerSlide = 20;
   slideData: SlideData;
   sessionId: number;
   maxSlides: number;
   sub: any;
   private interval: any;
+  private started: boolean;
 
   constructor(private presenterService: PresenterService,
               private route: ActivatedRoute,
@@ -47,6 +48,7 @@ export class ShowComponent implements OnInit {
         .then((slidedata) => {
           this.slideData = slidedata;
           if (this.slideData.images) {
+            this.started = true;
             this.setUrl(this.slideData.images[0].url);
           } else {
             this.switchImage();
@@ -66,10 +68,16 @@ export class ShowComponent implements OnInit {
   }
 
   switchImage(): void {
-    this.setUrl(this.prototypeUrls[++this.cnt % 3]);
+    if (this.started) {
+      ++this.cnt;
+    }
+    this.setUrl(this.prototypeUrls[this.cnt % 3]);
   }
   setUrl(url: string): void {
     this.moveOn();
-    this.imgSrcUrl = url;
+    if (this.started) {
+      this.imgSrcUrl = url;
+    }
+
   }
 }
