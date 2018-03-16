@@ -13,12 +13,13 @@ flask_app = Flask(__name__)
 def predict():
     try:
         print(request.json)
-        static_text = word_tokenize(request.json['staticText'])
         text = word_tokenize(request.json['text'])
-        excluded_text = word_tokenize(request.json['excludedText'])
-
-        text = [word for word in text if word not in excluded_text]
-        text = text + static_text
+        if 'excludedText' in request.json.keys():
+            excluded_text = word_tokenize(request.json['excludedText'])
+            text = [word for word in text if word not in excluded_text]
+        if 'staticText' in request.json.keys():
+            static_text = word_tokenize(request.json['staticText'])
+            text = text + static_text
 
         tagged = nltk.pos_tag(text)
         # print(tagged)
