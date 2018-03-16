@@ -13,6 +13,7 @@ import {PresenterService} from './presenter.service';
 import {HttpClientModule} from '@angular/common/http';
 import { ThankyouComponent } from './thankyou/thankyou.component';
 import { RecordingComponent } from './recording/recording.component';
+import {RecorderService} from "./recorder.service";
 
 const appRoutes: Routes = [
   { path: 'presenter', component: PresenterComponent },
@@ -48,6 +49,7 @@ const appRoutes: Routes = [
   providers: [
     SpeechRecognitionService,
     PresenterService,
+    RecorderService
   ],
   bootstrap: [AppComponent]
 })
