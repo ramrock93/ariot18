@@ -6,10 +6,14 @@ import { AppComponent } from './app.component';
 import { PresenterComponent } from './presenter/presenter.component';
 import {RouterModule, Routes} from '@angular/router';
 import { ShowComponent } from './show/show.component';
+import {SpeechRecognitionService} from './speech-recognition.service';
+import { TestSpeechToTextComponent } from './test-speech-to-text/test-speech-to-text.component';
 
 const appRoutes: Routes = [
   { path: 'presenter', component: PresenterComponent },
   { path: 'show/:id',      component: ShowComponent },
+  { path: 'test',      component: TestSpeechToTextComponent },
+
 
   { path: '',
     redirectTo: '/presenter',
@@ -21,7 +25,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     PresenterComponent,
-    ShowComponent
+    ShowComponent,
+    TestSpeechToTextComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +35,7 @@ const appRoutes: Routes = [
       { enableTracing: true }
       )
   ],
-  providers: [],
+  providers: [SpeechRecognitionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
