@@ -2,13 +2,10 @@
 Routes and views for the flask application.
 """
 from rake_nltk import Rake
-from flask import make_response, Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request
 from gensim.summarization.summarizer import summarize
-import requests
 import nltk
 from nltk import word_tokenize
-
-
 from urllib.request import Request, urlopen
 import json
 
@@ -44,14 +41,13 @@ def _get_next_item(s):
         end_quote = 0
         link = "no_links"
         return link, end_quote
-    else:
-        start_line = s.find('class="rg_meta notranslate">')
-        start_object = s.find('{', start_line + 1)
-        end_object = s.find('</div>', start_object + 1)
-        object_raw = str(s[start_object:end_object])
-        object_decode = bytes(object_raw, "utf-8").decode("unicode_escape")
-        final_object = json.loads(object_decode)
-        return final_object, end_object
+    start_line = s.find('class="rg_meta notranslate">')
+    start_object = s.find('{', start_line + 1)
+    end_object = s.find('</div>', start_object + 1)
+    object_raw = str(s[start_object:end_object])
+    object_decode = bytes(object_raw, "utf-8").decode("unicode_escape")
+    final_object = json.loads(object_decode)
+    return final_object, end_object
 
 
 # Getting all links with the help of '_images_get_next_image'
@@ -60,13 +56,13 @@ def _get_all_items(page, limit):
     i = 0
     count = 1
     while count < limit+1:
-        object, end_content = _get_next_item(page)
-        if object == "no_links":
+        html_object, end_content = _get_next_item(page)
+        if html_object == "no_links":
             break
         else:
-            #format the item for readability
-            object = format_object(object)
-            items.append(object)  # Append all the links in the list named 'Links'
+            # format the item for readability
+            html_object = format_object(html_object)
+            items.append(html_object)  # Append all the links in the list named 'Links'
             count += 1
             page = page[end_content:]
         i += 1
@@ -85,38 +81,37 @@ def get_images(query, max_images=3):
 
 flask_app = Flask(__name__)
 
+
 @flask_app.route('/text2slides', methods=['POST'])
-def predict():
+def text2slides():
     try:
         r = Rake()
         r.extract_keywords_from_text(request.json['text'])
+        keywords = r.get_ranked_phrases()[0:3]
+        print("Key phrases:", keywords)
 
         np = word_tokenize(request.json['text'])
         np = nltk.pos_tag(np)
         print(np)
         included_pos = ['NN', 'JJ']
         np = [n[0].lower() for n in np if n[1] in included_pos]
-        print("NPs:", np)
-
-        keywords = r.get_ranked_phrases()[0:3]
-
-        print("Keywords:", keywords)
+        print("Nouns and Adjectives:", np)
 
         search_words = " ".join(keywords)
         search_words = word_tokenize(search_words)
-
         np = [n for n in np if n not in search_words]
-
         search_words = search_words + np
 
         if 'excludedText' in request.json.keys():
             excluded_text = word_tokenize(request.json['excludedText'])
+            print("Words to exclude:", excluded_text)
             search_words = [word for word in search_words if word not in excluded_text]
         if 'staticText' in request.json.keys():
             static_text = word_tokenize(request.json['staticText'])
+            print("Words to add:", static_text)
             search_words = search_words + static_text
 
-        print("Filtered keywords", search_words)
+        print("Final search words", search_words)
         search_words = " ".join(search_words)
 
         #
@@ -141,9 +136,6 @@ def predict():
         final_slides = []
 
         for slide in slide_items:
-            print(slide['image_height'])
-            print(slide['image_width'])
-
             size_product = int(slide['image_height']) * int(slide['image_width'])
             if size_product >= 100000:
                 final_slides.append(slide)
@@ -180,4 +172,4 @@ def index():
     return render_template("index.html")
 
 
-flask_app.run("0.0.0.0", port=80, threaded=True, debug=True)
+flask_app.run("0.0.0.0", port=8080, threaded=True)
