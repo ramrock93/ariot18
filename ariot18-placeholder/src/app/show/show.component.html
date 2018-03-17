@@ -1,1 +1,9 @@
-<img src="{{imgSrcUrl}}" id="bg" alt="">
+<div class="image">
+<img *ngIf="started" src="{{imgSrcUrl}}" id="bg" alt="">
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      <h2 *ngIf="!started">The presentation <br> is about to start...</h2>
+    </div>
+  </div>
+
+</div>

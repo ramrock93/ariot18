@@ -2,14 +2,17 @@
   <div class="row">
     <div class="col-md-12">
       <div class="text-center" style="margin-top: 20em">
-        <button (click)="play($event)" type="submit" style="width: 150px; height: 100px;" class="btn btn-primary">
-          Play
+        <h2> Presentation will play at <br>
+          <h1> inmeta.consulting/show/{{_sessionId}} </h1></h2>
+
+        <button (click)="play($event)" type="submit" style="width: 150px; height: 100px; margin:5%" class="btn btn-primary">
+          Start
         </button>
         <br>
         <div class="col-form-label-lg">
-          <label for="session-id"><strong>Session-ID:</strong> #{{sessionId}}</label>
-          <label id="session-id"></label>
         </div>
+        <br>
+        <fa name="spin" animation="spin" size="5x"></fa>
       </div>
     </div>
   </div>

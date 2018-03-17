@@ -8,18 +8,21 @@ import {Router} from "@angular/router";
   styleUrls: ["./presenter.component.css"]
 })
 export class PresenterComponent implements OnInit {
-  private _sessionId = 123;
+  private _sessionId
 
   constructor(private presenterService: PresenterService, private router: Router) {
   }
 
   ngOnInit() {
-    this.presenterService.getId().then(res => this. _sessionId = res.valueOf());
+    this.presenterService.getId().then(res => {
+      this. _sessionId = res.valueOf();
+      localStorage.setItem('session-id', this._sessionId);
+    });
   }
 
   play(event) {
     console.log("Play button clicked");
-    this.router.navigateByUrl("/show/"+this.sessionId);
+    this.router.navigateByUrl('/recording/' + this.sessionId);
 
   }
 
