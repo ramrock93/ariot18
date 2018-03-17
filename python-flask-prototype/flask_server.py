@@ -4,6 +4,7 @@ Routes and views for the flask application.
 from rake_nltk import Rake
 from flask import Flask, jsonify, render_template, request
 from gensim.summarization.summarizer import summarize
+import random
 import nltk
 from nltk import word_tokenize
 from urllib.request import Request, urlopen
@@ -78,6 +79,14 @@ def get_images(query, max_images=3):
     items = _get_all_items(page, max_images)
     return items
 
+def filter_small_slides(slide_items):
+    new_slides = []
+    for slide in slide_items:
+        size_product = int(slide['image_height']) * int(slide['image_width'])
+        if size_product >= 100000:
+            new_slides.append(slide)
+    return new_slides
+
 
 flask_app = Flask(__name__)
 
@@ -133,15 +142,18 @@ def text2slides():
         #         slide_items.append(slide_item)
 
         slide_items = get_images(search_words)
-        final_slides = []
 
-        for slide in slide_items:
-            size_product = int(slide['image_height']) * int(slide['image_width'])
-            if size_product >= 100000:
-                final_slides.append(slide)
+        slide_items = filter_small_slides(slide_items)
+
+        if len(slide_items) == 0:
+            print("no text, awkward silence..")
+            slide_items = get_images("awkward silence", 8)
+            slide_items = filter_small_slides(slide_items)
+            random.shuffle(slide_items)
+
 
         return jsonify({"inputMessage": request.json['text'],
-                        "slides": final_slides,
+                        "slides": slide_items,
                         "searchTerm": search_words,
                         "status": "success"}), 200
     except Exception as e:
@@ -172,4 +184,4 @@ def index():
     return render_template("index.html")
 
 
-flask_app.run("0.0.0.0", port=8080, threaded=True)
+flask_app.run("0.0.0.0", port=80, threaded=True)
