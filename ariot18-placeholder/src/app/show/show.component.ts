@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {PresenterService} from '../presenter.service';
 import {SlideData} from '../SlideData';
 import {ActivatedRoute, Router} from '@angular/router';
+import {ImageModel} from "../ImageModel";
 
 
 @Component({
@@ -18,8 +19,8 @@ export class ShowComponent implements OnInit {
   ]
   imgSrcUrl: string;
   cnt = 0;
-  secondsPerSlide = 20;
-  slideData: SlideData;
+  secondsPerSlide = 5;
+  slideData: ImageModel;
   sessionId: number;
   maxSlides: number;
   sub: any;
@@ -33,6 +34,8 @@ export class ShowComponent implements OnInit {
   }
   ngOnInit() {
     this.maxSlides = 5;
+    this.started = false;
+    this.cnt = 0;
     this.interval = setInterval(() => {
       this.getSlideData();
     }, this.secondsPerSlide * 1000);
@@ -43,41 +46,46 @@ export class ShowComponent implements OnInit {
     });
   }
   getSlideData(): void {
-    if ( this.sessionId ){
-      this.presenterService.getSlideData(this.sessionId)
-        .then((slidedata) => {
+
+    console.log('getslidedata is called' + this.started +    " " + this.cnt);
+    this.presenterService.getSlideData(this.sessionId)
+      .then((slidedata) => {
+        if (slidedata) {
           this.slideData = slidedata;
-          if (this.slideData.images) {
+          if (this.slideData.url) {
             this.started = true;
-            this.setUrl(this.slideData.images[0].url);
+            this.setUrl(this.slideData.url);
           } else {
             this.switchImage();
           }
-        })
-        .catch(() => this.switchImage());
-    } else {
-      this.switchImage();
-    }
-  }
-  moveOn(): void {
-    if (this.cnt > this.maxSlides) {
-      console.log('navigate!');
-      clearInterval(this.interval);
-      this.router.navigate(['thankyou']);
-    }
+        }
+      })
+      .catch(this.handleError); // this.switchImage()
   }
 
-  switchImage(): void {
-    if (this.started) {
-      ++this.cnt;
-    }
-    this.setUrl(this.prototypeUrls[this.cnt % 3]);
-  }
-  setUrl(url: string): void {
-    this.moveOn();
-    if (this.started) {
-      this.imgSrcUrl = url;
-    }
+private handleError(error: any): Promise<any> {
+  console.error('An error occurred', error);
+console.log('ERROR');
+return Promise.reject(error.message || error);
+}
+moveOn(): void {
+  if (this.cnt > this.maxSlides) {
+  console.log('navigate!');
+  clearInterval(this.interval);
+  this.router.navigate(['thankyou']);
+}
+}
 
-  }
+switchImage(): void {
+
+  this.setUrl(this.prototypeUrls[this.cnt % 3]);
+}
+setUrl(url: string): void {
+  this.moveOn();
+if (this.started) {
+  this.cnt = this.cnt + 1;
+  this.imgSrcUrl = url;
+}
+
+}
 }

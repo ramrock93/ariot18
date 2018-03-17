@@ -8,7 +8,6 @@ import { PresenterComponent } from './presenter/presenter.component';
 import {RouterModule, Routes} from '@angular/router';
 import { ShowComponent } from './show/show.component';
 import {SpeechRecognitionService} from './speech-recognition.service';
-import { TestSpeechToTextComponent } from './test-speech-to-text/test-speech-to-text.component';
 import {PresenterService} from './presenter.service';
 import {HttpClientModule} from '@angular/common/http';
 import { ThankyouComponent } from './thankyou/thankyou.component';
@@ -18,7 +17,6 @@ import {RecorderService} from "./recorder.service";
 const appRoutes: Routes = [
   { path: 'presenter', component: PresenterComponent },
   { path: 'show/:id',      component: ShowComponent },
-  { path: 'test',      component: TestSpeechToTextComponent },
   { path: 'thankyou',      component: ThankyouComponent },
   { path: 'recording/:id',      component: RecordingComponent },
   {
@@ -33,7 +31,6 @@ const appRoutes: Routes = [
     AppComponent,
     PresenterComponent,
     ShowComponent,
-    TestSpeechToTextComponent,
     ThankyouComponent,
     RecordingComponent,
   ],

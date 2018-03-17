@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SpeechRecognitionService} from "../speech-recognition.service";
 import {RecorderService} from "../recorder.service";
 
@@ -7,16 +7,27 @@ import {RecorderService} from "../recorder.service";
   templateUrl: './recording.component.html',
   styleUrls: ['./recording.component.css']
 })
-export class RecordingComponent implements OnInit {
+export class RecordingComponent implements OnInit, OnDestroy {
   speechData: string;
+  buttontext: string;
+
+
 
   constructor(private speechService: SpeechRecognitionService,
               private recordService: RecorderService) { }
 
   ngOnInit() {
+    this.buttontext = 'Recorder';
+
+  }
+
+  ngOnDestroy() {
+    this.speechService.DestroySpeechObject();
   }
 
   startRecording() {
+
+    this.buttontext = 'Recording';
     this.speechService.record().subscribe(res => {
 
       this.speechData = res;
