@@ -30,7 +30,6 @@ export class SpeechRecognitionService {
       this.speechRecognition.onresult = speech => {
         let term = '';
         let interim_transcript = '';
-        console.log("onresult")
         for (let i = speech.resultIndex; i < speech.results.length; ++i) {
           if (speech.results[i].isFinal) {
             console.log('result confidence: ' + speech.results[i][0].confidence);
