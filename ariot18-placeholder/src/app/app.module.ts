@@ -18,7 +18,7 @@ const appRoutes: Routes = [
   { path: 'presenter', component: PresenterComponent },
   { path: 'show/:id',      component: ShowComponent },
   { path: 'thankyou',      component: ThankyouComponent },
-  { path: 'recording/:id',      component: RecordingComponent },
+  { path: 'recording/:id/:keywords',      component: RecordingComponent },
   {
     path: "",
     redirectTo: "/presenter",
