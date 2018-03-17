@@ -24,19 +24,27 @@ export class RecordingComponent implements OnInit, OnDestroy {
     this.route.params.subscribe( params => {
       this.sessionId = params['id'] * 1;
       this.keywords = params['keywords'];
+      this.recordService.sendRecordData(this.sessionId, this.keywords);
       console.log(params);
     });
+    setInterval(this.send, 20000);
   }
 
   ngOnDestroy() {
     this.speechService.DestroySpeechObject();
   }
-
+  send(): void {
+    if (this.speechData !==  undefined && this.speechData.length > 0) {
+      this.recordService.sendRecordData(this.sessionId, this.speechData);
+      this.speechData = '';
+    }
+  }
   startRecording() {
     this.buttontext = 'Recording';
     this.speechService.record().subscribe(res => {
-      this.speechData = res + ' ';
-      this.recordService.sendRecordData(+localStorage.getItem('session-id'), this.speechData + '.');
-    }, error => console.log('Something went wrong...'));
+      this.speechData = this.speechData += '.' + res;
+      // this.recordService.sendRecordData(this.sessionId, this.speechData);
+
+    }, error => console.log("Something went wrong..."));
   }
 }

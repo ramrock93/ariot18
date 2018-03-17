@@ -1,0 +1,3 @@
+gensim
+rake_nltk
+flask
