@@ -8,8 +8,8 @@ import {Router} from "@angular/router";
   styleUrls: ["./presenter.component.css"]
 })
 export class PresenterComponent implements OnInit {
-  private _sessionId
-
+  private _sessionId;
+  private  keywords: string;
   constructor(private presenterService: PresenterService, private router: Router) {
   }
 
@@ -18,12 +18,20 @@ export class PresenterComponent implements OnInit {
       this. _sessionId = res.valueOf();
       localStorage.setItem('session-id', this._sessionId);
     });
+    this.keywords = '';
   }
 
   play(event) {
     console.log("Play button clicked");
-    this.router.navigateByUrl('/recording/' + this.sessionId);
+    if (!this.sessionId) {
+      this.sessionId = 0;
+    }
+    this.router.navigateByUrl('/recording/' + this.sessionId + "/" + this.keywords);
 
+  }
+
+  onChange(event) {
+    this.keywords = event.target.value
   }
 
 

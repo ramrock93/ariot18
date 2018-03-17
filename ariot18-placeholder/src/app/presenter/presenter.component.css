@@ -3,18 +3,18 @@ h2 {
   width: 100%;
   color: #FFFDE7;
   opacity: 0.5;
-  font-size:30px;
+  font-size: 1em;;
   font-family: Helvetica;
   text-shadow: 0 1px 0 black;
   padding: 10%;
   background-color: black;
   border-radius: 15px;
 }
-h2.h1 {
+h2.a {
   width: 100%;
+  font-size: 1.5em;
   color: #FFFDE7;
   opacity: 0.5;
-  font-size: 40px;
   font-family: Helvetica;
   text-shadow: 0 1px 0 black;
   padding: 10%;
