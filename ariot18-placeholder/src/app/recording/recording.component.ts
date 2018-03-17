@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SpeechRecognitionService} from "../speech-recognition.service";
 import {RecorderService} from "../recorder.service";
+import {SlideData} from "../SlideData";
 
 @Component({
   selector: 'app-recording',
@@ -10,7 +11,6 @@ import {RecorderService} from "../recorder.service";
 export class RecordingComponent implements OnInit, OnDestroy {
   speechData: string;
   buttontext: string;
-
 
 
   constructor(private speechService: SpeechRecognitionService,
@@ -32,6 +32,7 @@ export class RecordingComponent implements OnInit, OnDestroy {
 
       this.speechData = res;
       this.recordService.sendRecordData(+localStorage.getItem('session-id'), this.speechData);
+      // this.recordService.getSlide(+localStorage.getItem('session-id')).then(res => this.slideData = res);
 
     }, error => console.log("Something went wrong..."));
   }

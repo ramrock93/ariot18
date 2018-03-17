@@ -24,8 +24,8 @@ export class ShowComponent implements OnInit {
   sessionId: number;
   maxSlides: number;
   sub: any;
-  private interval: any;
-  private started: boolean;
+  interval: any;
+  started: boolean;
 
   constructor(private presenterService: PresenterService,
               private route: ActivatedRoute,
